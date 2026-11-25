@@ -1,0 +1,22 @@
+{
+  "name": "Decondition",
+  "short_name": "Decondition",
+  "description": "Interrompi le vecchie abitudini e costruisci le nuove con metodi validati dalla ricerca. Break old habits and build new ones with research-backed methods.",
+  "lang": "it",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf1ec",
+  "theme_color": "#d33a27",
+  "categories": ["health", "lifestyle", "medical"],
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "Ho un impulso / I have an urge", "url": "./#sos", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+    {"name": "Check-in", "url": "./#today", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]}
+  ]
+}
