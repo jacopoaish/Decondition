@@ -27,6 +27,7 @@
 :root[data-theme=light]{color-scheme:light}
 :root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
 html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent}
 h1,h2,h3,.big{font-family:Sora,Inter,system-ui,sans-serif;letter-spacing:-.02em;line-height:1.08;margin:0}
@@ -143,16 +144,72 @@ nav.tabs a.s[aria-current=page]{color:var(--sup);background:var(--supT)}
 #toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translate(-50%,200%);background:var(--ink);color:var(--bg);border-radius:14px;padding:6px 6px 6px 16px;display:flex;align-items:center;gap:12px;transition:transform .25s,visibility .25s;max-width:calc(100vw - 32px);z-index:9;visibility:hidden}
 #toast.on{transform:translate(-50%,0);visibility:visible}
 #toast button{background:none;border:0;color:inherit;font-weight:600;text-decoration:underline}
-@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+button,.btn{transition:background-color .15s,border-color .15s,color .15s,transform .1s}
+button:active,.btn:active{transform:scale(.97)}
+.pop{animation:pop .4s ease}
+@keyframes pop{40%{transform:scale(1.04)}}
+.sheet{animation:fade .2s ease}
+.sheetIn{animation:up .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(48px);opacity:.3}}
+main>.view{animation:fade .18s ease}
+.ob .top,.ob nav.tabs{display:none}
+.ob main{padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:40px}
+#sync{font-size:13px;color:var(--mute);white-space:nowrap}
+.fab{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--sup);color:var(--onC);margin-top:-24px;box-shadow:0 0 0 5px var(--card);transition:transform .15s}
+nav.tabs a.s{gap:3px}
+nav.tabs a.s svg{width:28px;height:28px}
+nav.tabs a.s[aria-current=page]{background:none;color:var(--sup)}
+nav.tabs a.s[aria-current=page] .fab{transform:scale(1.06)}
+.tTop{align-items:stretch}
+@media(min-width:820px){.tTop{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}}
+.heroTop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.score{background:none;border:0;padding:4px;display:flex;align-items:center;gap:10px;text-align:left;border-radius:14px}
+.score:hover{background:color-mix(in srgb,var(--card) 60%,transparent)}
+.ring{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;flex:none}
+.ring b{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--field);font:700 19px Sora,Inter,sans-serif;font-variant-numeric:tabular-nums}
+.score small{display:block;font-size:13px;color:var(--mute);white-space:nowrap}
+.doneS{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--accT)}
+.doneS.l{background:color-mix(in srgb,var(--old) 18%,transparent)}
+.tick{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--acc);color:var(--onC);font-weight:700;font-size:20px;flex:none}
+.doneS.l .tick{background:var(--old)}
+.doneS>div{flex:1}
+details.nd{margin-top:12px}
+details.nd>summary{cursor:pointer;color:var(--mute);font-size:14px;font-weight:600;min-height:36px;display:flex;align-items:center}
+details.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:44px;margin:-6px 0}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary h2{margin:0}
+details.acc>summary::after{content:'';width:9px;height:9px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .2s;flex:none;margin:0 6px 4px 0}
+details.acc[open]>summary::after{transform:rotate(-135deg);margin-bottom:-4px}
+details.acc[open]>summary{margin-bottom:10px}
+.sumc{color:var(--mute);font-size:14px;margin-left:auto;white-space:nowrap}
+.obw{max-width:560px;margin:0 auto;display:grid;gap:16px;padding-top:4px}
+.obH{font-size:clamp(34px,8vw,46px);color:var(--acc)}
+.obl li{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.obl li:first-child{border-top:0}
+.obl i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--acc);margin-top:8px}
+.obnav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dots{display:flex;gap:6px}
+.dots i{width:26px;height:5px;border-radius:3px;background:var(--line);transition:background-color .2s}
+.dots i.on{background:var(--acc)}
+.choice{display:grid;gap:10px}
+.choice button{flex-direction:column;align-items:flex-start;text-align:left;padding:14px 16px;min-height:72px;gap:2px;font-weight:600;font-size:17px}
+.choice button span{font-size:14px;color:var(--mute);font-weight:400}
+.choice button[aria-pressed=true] span{color:inherit;opacity:.85}
+.micro{display:grid;grid-template-columns:repeat(auto-fit,minmax(13em,1fr));gap:8px}
+.micro button{flex-direction:column;align-items:flex-start;text-align:left;padding:12px 14px;gap:2px;font-weight:600}
+.micro button span{font-size:14px;color:var(--mute);font-weight:400}
+.cal i.l,.lg.l{background:repeating-linear-gradient(45deg,var(--old) 0 2px,transparent 2px 5px);box-shadow:inset 0 0 0 1.5px var(--old)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header class="top"><div class="topIn"><span class="brand">Decondition</span><div class="chips" id="habs" role="tablist"></div></div></header>
+<header class="top"><div class="topIn"><span class="brand">Decondition</span><span id="sync" role="status" hidden></span><div class="chips" id="habs" role="tablist"></div></div></header>
 <main id="main"></main>
 <nav class="tabs" id="nav" aria-label="Sezioni"><div>
 <a href="#today" data-v="today"><svg viewBox="0 0 24 24"><path d="M3 17c4-8 7 4 11-4s4-6 7-6"/><circle cx="21" cy="7" r="1.5"/></svg><span></span></a>
-<a href="#sos" data-v="sos" class="s"><svg viewBox="0 0 24 24"><path d="M2 16c3 0 3-4 6-4s3 6 6 6 3-10 8-10"/></svg><span></span></a>
 <a href="#progress" data-v="progress"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span></span></a>
+<a href="#sos" data-v="sos" class="s"><span class="fab"><svg viewBox="0 0 24 24"><path d="M2 15c3 0 3-4 6-4s3 6 6 6 3-10 8-10"/></svg></span><span></span></a>
 <a href="#plan" data-v="plan"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg><span></span></a>
 <a href="#more" data-v="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><span></span></a>
 </div></nav>
@@ -219,8 +276,9 @@ function sample(lang){
 }
 function load(){
   try{let v=localStorage.getItem(KEY);if(v){const o=migrate(JSON.parse(v));if(o)return o}v=localStorage.getItem(OLD);if(v){const o=migrate(JSON.parse(v));if(o)return o}}catch(e){}
-  return sample((navigator.language||'it').toLowerCase().startsWith('en')?'en':'it');
+  return blank((navigator.language||'it').toLowerCase().startsWith('en')?'en':'it');
 }
+function blank(lang){return {v:2,lang,cur:null,sample:false,onboard:true,habits:[],urges:[],lapses:[],trigs:[]}}
 S=load();
 
 let prev=null,ref=null,writing=false,pending=null,tt=0;
@@ -248,6 +306,13 @@ function stats(h){
   const denom=span+(h.log[t]?1:0);
   return {streak:n,best,kept,lap,idx:span,rode,urges:ur,logged,pct:denom?Math.round(kept/denom*100):0,drop:drops.length?drops.reduce((a,b)=>a+b,0)/drops.length:null};
 }
+function score(h,off=0){
+  const t=today(),lo=addD(t,-(off+13)),hi=addD(t,-off);let w=0,l=0;
+  for(let i=off;i<off+14;i++){const d=addD(t,-i);if(d<h.start)break;const v=h.log[d];if(v==='k')w++;else if(v==='l')l++}
+  S.urges.forEach(u=>{if(u.hid!==h.id)return;const d=ymd(u.t);if(d>=lo&&d<=hi){if(u.out==='rode')w++;else l++}});
+  return {v:Math.round(100*(w+1)/(w+l+2)),w,l,n:w+l};
+}
+const buzz=(ms=12)=>{try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
 const srbScore=e=>e.a.reduce((a,b)=>a+b,0)/e.a.length;
 const fmtN=(n,dec=0)=>Number(n).toLocaleString(locale(),{maximumFractionDigits:dec,minimumFractionDigits:dec});
 const fmtDay=s=>new Date(...parse(s)).toLocaleDateString(locale(),{day:'numeric',month:'short'});
@@ -260,60 +325,108 @@ addEventListener('hashchange',()=>{render();scrollTo(0,0)});
 
 function render(){
   document.documentElement.lang=S.lang;
-  const h=cur(),v=view();
-  $('habs').innerHTML=S.habits.map(x=>`<button role="tab" aria-pressed="${!!h&&x.id===h.id}" data-act="hab" data-id="${esc(x.id)}">${esc(x.name)}</button>`).join('')+`<button data-act="newhab" aria-label="${L('Nuova abitudine','New habit')}">+ ${L('Nuova','New')}</button>`;
+  if(!S.onboard&&!S.habits.length&&view()!=='more')S.onboard=true;
+  document.body.classList.toggle('ob',!!S.onboard);
   const names={today:L('Oggi','Today'),sos:L('Impulso','Urge'),progress:L('Progressi','Progress'),plan:L('Piano','Plan'),more:L('Altro','More')};
-  for(const a of $('nav').querySelectorAll('a')){a.querySelector('span').textContent=names[a.dataset.v];if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}
+  for(const a of $('nav').querySelectorAll('a')){a.querySelector('span:last-child').textContent=names[a.dataset.v];if(a.dataset.v===view())a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}
   $('nav').setAttribute('aria-label',L('Sezioni','Sections'));
   const m=$('main');
-  if(!h&&v!=='more'){m.innerHTML=emptyView();return}
-  m.innerHTML=(S.sample?`<div class="sample">${L('Stai vedendo dati di esempio.','You are looking at example data.')} <button class="quiet" data-act="fresh">${L('Inizia da zero','Start fresh')}</button></div>`:'')+({today:vToday,sos:vSOS,progress:vProgress,plan:vPlan,more:vMore})[v](h);
+  if(S.onboard){$('habs').innerHTML='';m.innerHTML=vOnboard();return}
+  const h=cur(),v=view();
+  $('habs').innerHTML=S.habits.map(x=>`<button role="tab" aria-pressed="${!!h&&x.id===h.id}" data-act="hab" data-id="${esc(x.id)}">${esc(x.name)}</button>`).join('')+`<button data-act="newhab" aria-label="${L('Nuova abitudine','New habit')}">+ ${L('Nuova','New')}</button>`;
+  m.innerHTML=(S.sample?`<div class="sample">${L('Stai esplorando un esempio.','You are exploring an example.')} <button class="quiet" data-act="fresh">${L('Inizia con la tua abitudine','Start with your own habit')}</button></div>`:'')+({today:vToday,sos:vSOS,progress:vProgress,plan:vPlan,more:vMore})[v](h);
   if(v==='today')drawRoute();
   if(v==='progress')drawSrb();
   if(v==='sos'&&U.ph==='run')tick();
 }
-function emptyView(){
-  return `<section class="view"><div class="panel"><h2>${L('Cominciamo','Let\'s begin')}</h2><p>${L('Scegli un\'abitudine da interrompere o da costruire. Ti chiederò il momento in cui scatta e cosa farai invece: è questo collegamento «se… allora…» che fa la differenza.','Pick one habit to break or to build. I\'ll ask when it kicks in and what you\'ll do instead: that "if… then…" link is what makes the difference.')}</p><button class="go wide" data-act="newhab">${L('Aggiungi la prima abitudine','Add your first habit')}</button></div></section>`;
+
+/* ---------- ONBOARDING ---------- */
+let OB={step:0,kind:'break',name:'',iff:'',then:'',why:'',mins:''};
+const EX={break:[['Scrolling sui social','Social media scrolling'],['Fumare','Smoking'],['Spuntini notturni','Late-night snacking'],['Rimandare','Procrastinating'],['Mangiarsi le unghie','Nail biting']],build:[['Camminare 15 minuti','Walk 15 minutes'],['Leggere 10 pagine','Read 10 pages'],['Meditare 5 minuti','Meditate 5 minutes'],['Andare a letto presto','Go to bed early'],['Bere più acqua','Drink more water']]};
+function vOnboard(){
+  const st=OB.step,brk=OB.kind==='break';
+  const head=st?`<div class="obnav"><button class="quiet" data-act="ob" data-v="back">← ${L('Indietro','Back')}</button><div class="dots" aria-label="${L('Passo','Step')} ${st} / 4">${[1,2,3,4].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div></div>`:'';
+  let body='';
+  if(st===0)body=`<div class="panel"><h1 class="obH">Decondition</h1>
+<p class="q">${L('Disimpara le vecchie abitudini. Costruisci quelle nuove.','Unlearn old habits. Build new ones.')}</p>
+<ul class="obl"><li><i></i><span><b>${L('Piani se-allora','If-then plans')}</b><br><span class="note">${L('Decidi prima cosa fare nel momento critico: è la tecnica con l\'effetto più forte.','Decide in advance what to do in the critical moment: the technique with the strongest effect.')}</span></span></li>
+<li><i></i><span><b>${L('Impulsi guidati','Guided urges')}</b><br><span class="note">${L('Quando arriva la voglia, la cavalchi come un\'onda invece di combatterla.','When the urge hits, you ride it like a wave instead of fighting it.')}</span></span></li>
+<li><i></i><span><b>${L('Progressi misurati','Measured progress')}</b><br><span class="note">${L('Con gli stessi strumenti usati negli studi sulle abitudini.','With the same tools used in habit research.')}</span></span></li></ul>
+<div class="pair" style="margin:14px 0"><button data-act="lang" data-v="it" aria-pressed="${S.lang==='it'}">Italiano</button><button data-act="lang" data-v="en" aria-pressed="${S.lang==='en'}">English</button></div>
+<button class="go wide" style="min-height:54px;font-size:17px" data-act="ob" data-v="next">${L('Inizia · 1 minuto','Start · 1 minute')}</button>
+<button class="quiet wide" style="margin-top:6px" data-act="obSample">${L('Prima esplora un esempio','Explore an example first')}</button>
+<p class="cite" style="margin:10px 0 0;text-align:center">${framed?L('I tuoi dati restano privati nel tuo account. Niente pubblicità.','Your data stays private in your account. No ads.'):L('I tuoi dati restano sul telefono. Nessun account, niente pubblicità.','Your data stays on your phone. No account, no ads.')}</p></div>`;
+  if(st===1)body=`<div class="panel"><h2>${L('Cosa vuoi fare?','What do you want to do?')}</h2><div class="choice">
+<button data-act="obKind" data-v="break" aria-pressed="${OB.kind==='break'&&OB.picked}">${L('Interrompere un\'abitudine','Break a habit')}<span>${L('Scrolling, fumo, spuntini notturni, rimandare…','Scrolling, smoking, late-night snacking, procrastinating…')}</span></button>
+<button data-act="obKind" data-v="build" aria-pressed="${OB.kind==='build'&&OB.picked}">${L('Costruire un\'abitudine','Build a habit')}<span>${L('Camminare, leggere, meditare, dormire prima…','Walking, reading, meditating, sleeping earlier…')}</span></button></div></div>`;
+  if(st===2)body=`<div class="panel"><h2>${brk?L('Quale abitudine vuoi interrompere?','Which habit do you want to break?'):L('Quale abitudine vuoi costruire?','Which habit do you want to build?')}</h2>
+<label class="l" for="obName">${L('Chiamala in modo semplice','Give it a simple name')}</label><input id="obName" maxlength="60" value="${esc(OB.name)}" autocomplete="off">
+<p class="lbl">${L('Oppure scegli','Or pick one')}</p><div class="chipset">${EX[OB.kind].map(e=>`<button data-act="obEx" data-v="${esc(L(...e))}">${esc(L(...e))}</button>`).join('')}</div>
+<button class="go wide" style="margin-top:16px" data-act="ob" data-v="next">${L('Avanti','Next')}</button></div>`;
+  if(st===3)body=`<div class="panel"><h2>${L('Il tuo primo piano se-allora','Your first if-then plan')}</h2>
+<p class="note">${L('Descrivi il momento preciso in cui scatta e cosa farai. Pianificarlo prima rende la risposta quasi automatica (Gollwitzer & Sheeran, 2006).','Describe the exact moment it kicks in and what you\'ll do. Planning it in advance makes the response nearly automatic (Gollwitzer & Sheeran, 2006).')}</p>
+<label class="l" for="obIf"><b style="color:var(--acc)">${L('Se','If')}</b>…</label><input id="obIf" maxlength="120" value="${esc(OB.iff)}" placeholder="${brk?L('mi siedo sul divano dopo cena e prendo il telefono','I sit on the sofa after dinner and grab my phone'):L('finisco il primo caffè','I finish my first coffee')}">
+<label class="l" for="obThen">…<b style="color:var(--acc)">${L('allora','then')}</b></label><input id="obThen" maxlength="120" value="${esc(OB.then)}" placeholder="${brk?L('lo metto in un\'altra stanza e prendo un libro','I put it in another room and pick up a book'):L('esco a camminare per 15 minuti','I go for a 15-minute walk')}">
+<button class="go wide" style="margin-top:16px" data-act="ob" data-v="next">${L('Avanti','Next')}</button>
+<button class="quiet wide" data-act="ob" data-v="skip">${L('Lo scrivo più tardi','I\'ll write it later')}</button></div>`;
+  if(st===4)body=`<div class="panel"><h2>${L('Perché è importante per te?','Why does it matter to you?')}</h2>
+<p class="note">${L('Te lo ricorderò nei momenti difficili.','I\'ll remind you of it in the hard moments.')}</p>
+<label class="l" for="obWhy">${L('Il tuo motivo','Your reason')}</label><input id="obWhy" maxlength="80" value="${esc(OB.why)}" placeholder="${brk?L('dormire meglio e avere più energia','sleep better and have more energy'):L('sentirmi più in forma','feel fitter')}">
+${brk?`<label class="l" for="obMins">${L('Quanti minuti ti porta via al giorno? (facoltativo)','How many minutes a day does it take? (optional)')}</label><input id="obMins" type="number" inputmode="numeric" min="0" value="${esc(OB.mins)}" style="max-width:10em">`:''}
+<button class="go wide" style="margin-top:16px;min-height:54px;font-size:17px" data-act="obDone">${L('Inizia oggi','Start today')}</button></div>`;
+  return `<section class="view"><div class="obw">${head}${body}</div></section>`;
+}
+function obFinish(){
+  const nh=normH({id:uid(),name:OB.name.trim(),kind:OB.kind,start:today(),mins:Math.max(0,parseFloat(OB.mins)||0)});
+  if(OB.iff.trim()&&OB.then.trim())nh.plans.push({if:OB.iff.trim(),then:OB.then.trim()});
+  if(OB.then.trim())nh.response=OB.then.trim();
+  if(OB.why.trim())nh.reasons.push(OB.why.trim());
+  change(()=>{S.habits=[nh];S.urges=[];S.lapses=[];S.sample=false;S.onboard=false;S.cur=nh.id},null);
+  OB={step:0,kind:'break',name:'',iff:'',then:'',why:'',mins:''};
+  if(location.hash!=='#today')location.hash='today';else render();
+  buzz(30);toast(L('Giorno 1. Si parte.','Day 1. Here we go.'));
 }
 
 /* ---------- TODAY ---------- */
 function vToday(h){
   const st=stats(h),t=today(),v=h.log[t],brk=h.kind==='break',name=esc(h.name.toLowerCase());
+  const sc=score(h),ps=score(h,14),dd=ps.n&&sc.n?sc.v-ps.v:null;
   const last=h.srbai[h.srbai.length-1],due=!last||diffD(last.date,t)>=7;
-  const saved=brk&&(h.cost||h.mins)?`<div><b>${h.cost?esc(h.cur)+' '+fmtN(st.kept*h.cost):fmtN(st.kept*h.mins/60,1)+' h'}</b><span>${h.cost?L('risparmiati','saved'):L('di tempo recuperato','time reclaimed')}</span></div>`:'';
+  const saved=brk&&h.cost?`<div><b>${esc(h.cur)} ${fmtN(st.kept*h.cost)}</b><span>${L('risparmiati finora','saved so far')}</span></div>`:'';
+  const yr=brk&&h.mins?`<div><b>${fmtN(st.kept*h.mins/60,1)} h</b><span>${L('recuperate finora','reclaimed so far')}</span></div><div><b>${fmtN(h.mins*365/60/24,1)} ${L('giorni','days')}</b><span>${L('liberati in un anno','freed in a year')}</span></div>`:'';
   const plans=h.plans.slice(0,2).map(p=>`<li class="ifthen"><b>${L('Se','If')}</b> ${esc(p.if)}, <b>${L('allora','then')}</b> ${esc(p.then)}.</li>`).join('');
+  const ck=v?`<div class="doneS ${v}"><span class="tick" aria-hidden="true">${v==='k'?'✓':'–'}</span><div><b>${v==='k'?(brk?L('Tenuto oggi','Held today'):L('Fatto oggi','Done today')):(brk?L('Passo falso registrato','Slip logged'):L('Saltato oggi','Missed today'))}</b><br><span class="note">${v==='k'?L('Ogni ripetizione rinforza il nuovo percorso.','Each repetition strengthens the new route.'):L('Un giorno non cancella i progressi. Conta non saltarne due di fila.','One day doesn\'t erase progress. What matters is not missing two in a row.')}</span></div><button class="quiet" data-act="ckUndo">${L('Cambia','Change')}</button></div>`
+    :`<p class="q">${brk?L(`Oggi sei rimasto lontano da: ${name}?`,`Did you stay clear of ${name} today?`):L(`Oggi hai fatto: ${name}?`,`Did you do your ${name} today?`)}</p>
+<div class="pair"><button class="go" data-act="ck" data-v="k">${brk?L('Sì, tenuto','Yes, held'):L('Fatto','Done')}</button><button data-act="ck" data-v="l">${brk?L('Ho ceduto','I slipped'):L('Saltato','Missed')}</button></div>`;
+  const ring=`conic-gradient(var(--sup) ${sc.v*3.6}deg,var(--line) 0)`;
+  const planCard=`<div class="panel"><h2>${L('Il tuo piano se-allora','Your if-then plan')}</h2>${plans?`<ul class="plan">${plans}</ul>`:`<p class="empty">${L('Nessun piano ancora: è lo strumento più efficace, aggiungine uno.','No plan yet: it\'s the most effective tool, add one.')}</p>`}
+  ${h.response?`<p class="remind"><b>${brk?L('Al posto suo:','Instead:'):L('Il primo passo:','First step:')}</b> ${esc(h.response)}</p>`:''}
+  <a class="btn" href="#plan">${plans?L('Modifica il piano','Edit plan'):L('Scrivi un piano','Write a plan')}</a></div>`;
+  const measure=due?`<div class="panel"><h2>${L('Misura settimanale','Weekly check')}</h2>
+  <p>${L('4 domande, 30 secondi: misurano quanto l\'abitudine è ancora automatica.','4 questions, 30 seconds: they measure how automatic the habit still is.')}</p>
+  <p class="cite">Self-Report Behavioural Automaticity Index (Gardner et al., 2012).</p>
+  <button class="go wide" data-act="srbai">${L('Misura ora','Measure now')}</button></div>`:'';
   return `<section class="view">
-<div class="cols"><div class="hero">
-  <div class="count"><b class="big">${L('Giorno','Day')} ${st.idx+1}</b><span class="note">${st.idx+1>=GOAL?L('Oltre il giorno 66: la mediana stimata per l\'automaticità.','Past day 66, the estimated median for automaticity.'):L('di circa 66. Nello studio di Lally (2010) servivano da 18 a 254 giorni.','of about 66. In Lally\'s 2010 study it took 18 to 254 days.')}</span></div>
-  <div class="fig" id="fig"><svg id="sv" role="img" aria-label="${L('Mappa del percorso','Route map')}"></svg></div>
-  <p class="cite">${L('Ogni punto è un giorno. Toccalo per correggerlo.','Each dot is a day. Tap one to correct it.')}</p>
-</div>
-<div class="stackc">
-  <div class="panel">
-    <h2>${L('Check-in di oggi','Today\'s check-in')}</h2>
-    <p class="q">${brk?L(`Oggi sei rimasto lontano da: ${name}?`,`Did you stay clear of ${name} today?`):L(`Oggi hai fatto: ${name}?`,`Did you do your ${name} today?`)}</p>
-    <div class="pair"><button class="k" data-act="ck" data-v="k" aria-pressed="${v==='k'}">${brk?L('Sì, tenuto','Yes, held'):L('Fatto','Done')}</button><button data-act="ck" data-v="l" aria-pressed="${v==='l'}">${brk?L('Ho ceduto','I slipped'):L('Saltato','Missed')}</button></div>
-    <label class="l" for="note">${L('Nota del giorno (facoltativa)','Note for today (optional)')}</label>
-    <textarea id="note" data-note="${t}" placeholder="${L('Cosa ha aiutato? Cosa è stato difficile?','What helped? What was hard?')}">${esc(h.notes[t]||'')}</textarea>
-    <p class="cite" style="margin:8px 0 0">${L('Registrare i progressi per iscritto aumenta le probabilità di riuscita (meta-analisi Harkin 2016, 138 studi).','Recording progress in writing raises the odds of success (Harkin 2016 meta-analysis, 138 studies).')}</p>
+<div class="cols tTop"><div class="stackc">
+  <div class="panel" id="ck"><h2>${L('Check-in di oggi','Today\'s check-in')}</h2>${ck}
+    <details class="nd" ${h.notes[t]?'open':''}><summary>${h.notes[t]?L('Nota del giorno','Today\'s note'):L('+ Aggiungi una nota','+ Add a note')}</summary>
+    <textarea id="note" data-note="${t}" aria-label="${L('Nota del giorno','Today\'s note')}" placeholder="${L('Cosa ha aiutato? Cosa è stato difficile?','What helped? What was hard?')}">${esc(h.notes[t]||'')}</textarea></details>
   </div>
-  <a class="sos" href="#sos"><span><b>${L('Ho un impulso adesso','I have an urge right now')}</b><br><span>${L('Cavalca l\'onda: 5–15 minuti guidati','Surf it: 5–15 guided minutes')}</span></span><span aria-hidden="true" style="font-size:26px">→</span></a>
+  <a class="sos" href="#sos"><span><b>${L('Ho un impulso adesso','I have an urge right now')}</b><br><span>${L('Cavalca l\'onda o fai un micro-intervento','Surf the wave or try a quick fix')}</span></span><span aria-hidden="true" style="font-size:26px">→</span></a>
+</div>
+<div class="hero">
+  <div class="heroTop"><div class="count"><b class="big">${L('Giorno','Day')} ${st.idx+1}</b><span class="note">${st.idx+1>=GOAL?L('oltre il traguardo dei 66','past the 66-day mark'):L('di circa 66','of about 66')}</span></div>
+  <button class="score" data-act="scoreInfo" aria-label="${L('Autocontrollo','Self-control')} ${sc.n?sc.v+'/100':L('nessun dato','no data')}"><span class="ring" style="background:${sc.n?ring:'var(--line)'}"><b>${sc.n?sc.v:'–'}</b></span><span><b>${L('Autocontrollo','Self-control')}</b><small>${!sc.n?L('si calcola dalle tue scelte','built from your choices'):dd==null?L('ultimi 14 giorni','last 14 days'):(dd>=0?'▲ +'+dd:'▼ '+dd)+' '+L('vs 14 gg prima','vs prior 14 days')}</small></span></button></div>
+  <div class="fig" id="fig"><svg id="sv" role="img" aria-label="${L('Mappa del percorso: un punto per ogni giorno','Route map: one dot per day')}"></svg></div>
+  <p class="cite">${L('Ogni punto è un giorno: toccalo per correggerlo. 66 giorni è la mediana di Lally (2010), con un intervallo da 18 a 254.','Each dot is a day: tap one to correct it. 66 days is Lally\'s 2010 median, ranging from 18 to 254.')}</p>
 </div></div>
 <div class="panel"><div class="stats">
   <div><b>${st.streak}</b><span>${L('giorni di fila','day streak')}</span></div>
   <div><b>${st.best}</b><span>${L('record','best streak')}</span></div>
   <div><b>${st.pct}%</b><span>${L('giorni riusciti','days kept')}</span></div>
-  <div><b style="color:var(--sup)">${st.rode}</b><span>${L('impulsi superati','urges ridden out')}</span></div>${saved}
+  <div><b style="color:var(--sup)">${st.rode}</b><span>${L('impulsi superati','urges ridden out')}</span></div>${saved}${yr}
 </div></div>
-<div class="cols">
-  <div class="panel"><h2>${L('Il tuo piano se-allora','Your if-then plan')}</h2>${plans?`<ul class="plan">${plans}</ul>`:`<p class="empty">${L('Nessun piano ancora.','No plan yet.')}</p>`}
-  ${h.response?`<p class="remind"><b>${brk?L('Al posto suo:','Instead:'):L('Il primo passo:','First step:')}</b> ${esc(h.response)}</p>`:''}
-  <a class="btn" href="#plan">${L('Modifica il piano','Edit plan')}</a></div>
-  <div class="panel"><h2>${L('Misura settimanale','Weekly measure')}</h2>
-  <p>${due?L('È ora della misura di automaticità: 4 domande, 30 secondi.','Time for the automaticity check: 4 questions, 30 seconds.'):L('Prossima misura tra','Next check in')+(due?'':' '+(7-diffD(last.date,t))+' '+L('giorni','days'))+'.'}</p>
-  <p class="cite">${L('Usa il Self-Report Behavioural Automaticity Index (Gardner et al., 2012), lo strumento validato per seguire la formazione o la rottura di un\'abitudine.','Uses the Self-Report Behavioural Automaticity Index (Gardner et al., 2012), the validated tool for tracking habit formation or disruption.')}</p>
-  <button class="${due?'go':''} wide" data-act="srbai">${due?L('Misura ora','Measure now'):L('Misura comunque','Measure anyway')}</button></div>
-</div>
+${measure?`<div class="cols">${planCard}${measure}</div>`:planCard}
 </section>`;
 }
 function drawRoute(){
@@ -345,6 +458,12 @@ const ro=new ResizeObserver(()=>{if(view()==='today')drawRoute();if(view()==='pr
 let U=(()=>{try{const o=JSON.parse(localStorage.getItem(UKEY));if(o&&o.ph)return o}catch(e){}return null})()||{ph:'set',pre:6,trig:'',halt:[],min:10,end:0,start:0,post:3};
 const saveU=()=>{try{localStorage.setItem(UKEY,JSON.stringify(U))}catch(e){}};
 let uTick=0;
+function MICRO(h){const brk=h.kind==='break';return [
+  {id:'breath',min:1,t:L('Respiro lento 4-6','Slow breathing 4-6'),d:L('1 minuto per abbassare l\'attivazione','1 minute to lower arousal'),g:L('Inspira dal naso per 4 secondi, espira lentamente per 6. Segui il ritmo qui sotto.','Breathe in through your nose for 4 seconds, out slowly for 6. Follow the rhythm below.')},
+  {id:'move',min:1,t:L('Cambia stanza','Change rooms'),d:L('Esci dal contesto che fa scattare l\'impulso','Leave the context that sets off the urge'),g:L('Alzati e vai in un\'altra stanza, o fuori. Resta lì finché il timer finisce.','Get up and go to another room, or outside. Stay there until the timer ends.')},
+  {id:'resp',min:1,t:brk?L('Risposta alternativa','Competing response'):L('Primo passo minimo','Smallest first step'),d:h.response?h.response:L('Un gesto incompatibile con l\'abitudine','An action incompatible with the habit'),g:h.response?L('Fallo adesso: ','Do it now: ')+h.response+'.':L('Fai adesso qualcosa con le mani che renda impossibile l\'abitudine: stringi un oggetto, intreccia le dita, bevi un bicchiere d\'acqua.','Do something with your hands right now that makes the habit impossible: squeeze an object, interlace your fingers, drink a glass of water.')},
+  {id:'why',min:1,t:L('Rileggi i tuoi motivi','Reread your reasons'),d:L('Desiderio contro ostacolo (WOOP)','Wish versus obstacle (WOOP)'),g:(h.reasons.length?h.reasons.join(' · '):L('Pensa al risultato migliore se resisti oggi.','Picture the best outcome if you hold out today.'))+(h.woop&&h.woop.obstacle?' — '+L('Ostacolo: ','Obstacle: ')+h.woop.obstacle:'')},
+  {id:'delay',min:10,t:L('Rimanda di 10 minuti','Delay 10 minutes'),d:L('Non dire no: dì «tra 10 minuti»','Don\'t say no: say "in 10 minutes"'),g:L('Hai solo rimandato. Fai altro finché il timer finisce, poi decidi di nuovo.','You\'ve only delayed. Do something else until the timer ends, then decide again.')}]}
 const PHASES=[[0,'Nota l\'impulso. Non devi fare niente, solo osservarlo.','Notice the urge. You don\'t have to do anything, just watch it.'],[.12,'Dove lo senti nel corpo? Petto, mani, stomaco, mascella.','Where do you feel it in your body? Chest, hands, stomach, jaw.'],[.27,'Descrivilo: caldo o freddo, fermo o pulsante, grande o piccolo?','Describe it: warm or cold, still or pulsing, big or small?'],[.42,'Respira lento. Lascia che la sensazione resti lì, senza seguirla.','Breathe slowly. Let the feeling stay there without following it.'],[.58,'Sta salendo, è al picco o sta già calando?','Is it rising, at its peak, or already falling?'],[.74,'Gli impulsi sono onde: salgono, toccano il picco, passano.','Urges are waves: they rise, they peak, they pass.'],[.88,'Ora passa al tuo piano.','Now switch to your plan.']];
 function vSOS(h){
   const brk=h.kind==='break';
@@ -352,10 +471,10 @@ function vSOS(h){
   const side=`<div class="panel"><h2>${L('Ultimi impulsi','Recent urges')}</h2>${recent?`<ul class="log">${recent}</ul>`:`<p class="empty">${L('Nessuno ancora.','None yet.')}</p>`}
   <p class="cite" style="margin-top:10px">${L('L\'«urge surfing» viene dalla Mindfulness-Based Relapse Prevention (Bowen & Marlatt, 2009): non si combatte l\'impulso, lo si osserva finché cala.','Urge surfing comes from Mindfulness-Based Relapse Prevention (Bowen & Marlatt, 2009): you don\'t fight the urge, you watch it until it falls.')}</p></div>`;
   if(U.ph==='run'){
-    const p=h.plans[0];
-    return `<section class="view"><div class="cols"><div class="panel"><h2>${L('Cavalca l\'onda','Surf the wave')}</h2>
+    const p=h.plans[0],mi=U.mi&&MICRO(h).find(x=>x.id===U.mi);
+    return `<section class="view"><div class="cols"><div class="panel"><h2>${mi?esc(mi.t):L('Cavalca l\'onda','Surf the wave')}</h2>
 <div class="wave"><svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id="wc"><rect id="wr" x="0" y="0" width="0" height="120"/></clipPath></defs><path d="${wavePath()} L300 120 L0 120Z" fill="var(--line)"/><path d="${wavePath()} L300 120 L0 120Z" fill="var(--sup)" clip-path="url(#wc)" opacity=".85"/><circle id="wd" cx="0" cy="112" r="6" fill="var(--ink)"/></svg></div>
-<div class="clock" id="clk">--:--</div><p class="phase" id="ph"></p><p class="breath" id="br"></p>
+<div class="clock" id="clk">--:--</div><p class="phase" id="ph">${mi?esc(mi.g):''}</p><p class="breath" id="br"></p>
 ${p?`<div class="remind"><b>${L('Il tuo piano','Your plan')}:</b> ${L('se','if')} ${esc(p.if)}, ${L('allora','then')} ${esc(p.then)}.</div>`:''}
 ${h.reasons.length?`<div class="remind"><b>${L('Perché lo fai','Why you\'re doing this')}:</b> ${h.reasons.map(esc).join(' · ')}</div>`:''}
 <div class="pair"><button class="teal" data-act="uEnd">${L('È passato','It passed')}</button><button data-act="uGave">${L('Ho ceduto','I gave in')}</button></div></div>${side}</div></section>`;
@@ -381,7 +500,9 @@ ${h.reasons.length?`<div class="remind"><b>${L('Perché lo fai','Why you\'re doi
 <p class="cite" style="margin-top:6px">${L('Fame, rabbia, solitudine e stanchezza: gli stati che nella pratica clinica precedono più spesso una ricaduta.','Hungry, angry, lonely, tired: the states that most often precede a lapse in clinical practice.')}</p>
 <p class="lbl">${L('Durata','Length')}</p>
 <div class="chipset">${[5,10,15].map(m=>`<button data-act="uMin" data-v="${m}" aria-pressed="${U.min===m}">${m} min</button>`).join('')}</div>
-<button class="teal wide" style="margin-top:16px;min-height:54px;font-size:18px" data-act="uStart">${L('Inizia a cavalcare l\'onda','Start surfing the urge')}</button></div>${side}</div></section>`;
+<button class="teal wide" style="margin-top:16px;min-height:54px;font-size:18px" data-act="uStart">${L('Inizia a cavalcare l\'onda','Start surfing the urge')}</button></div>
+<div class="stackc"><div class="panel"><h2>${L('Non hai 10 minuti?','No time for 10 minutes?')}</h2><p class="note">${L('Micro-interventi da 1 minuto. Registrano l\'impulso come gli altri.','1-minute quick fixes. They log the urge like the others.')}</p>
+<div class="micro">${MICRO(h).map(m=>`<button data-act="mi" data-v="${m.id}">${esc(m.t)}<span>${esc(m.d)}</span></button>`).join('')}</div></div>${side}</div></div></section>`;
 }
 function wavePath(){let d='';for(let i=0;i<=60;i++){const x=i*5,u=(x-150)/62,y=112-92*Math.exp(-u*u);d+=(i?'L':'M')+x+' '+y.toFixed(1)}return d}
 function tick(){
@@ -389,10 +510,10 @@ function tick(){
   const tot=U.min*6e4,left=Math.max(0,U.end-Date.now()),f=1-left/tot;
   c.textContent=Math.floor(left/6e4)+':'+pad(Math.floor(left/1e3)%60);
   const x=f*300,u=(x-150)/62;$('wr').setAttribute('width',x.toFixed(1));$('wd').setAttribute('cx',x.toFixed(1));$('wd').setAttribute('cy',(112-92*Math.exp(-u*u)).toFixed(1));
-  let ph=PHASES[0];for(const p of PHASES)if(f>=p[0])ph=p;
+  if(!U.mi){let ph=PHASES[0];for(const p of PHASES)if(f>=p[0])ph=p;
   const h=cur(),txt=ph===PHASES[6]&&h&&h.response?L(ph[1],ph[2])+' '+h.response+'.':L(ph[1],ph[2]);
-  if($('ph').textContent!==txt)$('ph').textContent=txt;
-  const b=((Date.now()-U.start)/1e3)%10;$('br').textContent=b<4?L('Inspira… ','Breathe in… ')+(4-Math.floor(b)):L('Espira lentamente… ','Breathe out slowly… ')+(10-Math.floor(b));
+  if($('ph').textContent!==txt)$('ph').textContent=txt}
+  const b=((Date.now()-U.start)/1e3)%10;$('br').textContent=U.mi&&U.mi!=='breath'?'':b<4?L('Inspira… ','Breathe in… ')+(4-Math.floor(b)):L('Espira lentamente… ','Breathe out slowly… ')+(10-Math.floor(b));
   if(!left){clearInterval(uTick);U.ph='post';saveU();if(navigator.vibrate)try{navigator.vibrate([200,100,200])}catch(e){}render()}
 }
 function startTick(){clearInterval(uTick);uTick=setInterval(tick,250)}
@@ -423,6 +544,7 @@ function vProgress(h){
 <div class="fig card" id="sfig" style="min-height:220px"><svg id="ssv" role="img" aria-label="${L('Curva di automaticità','Automaticity curve')}"></svg></div>
 <button data-act="srbai">${L('Nuova misura','New check')}</button></div>
 <div class="panel"><div class="stats">
+<div><b style="color:var(--sup)">${score(h).n?score(h).v:'–'}</b><span>${L('autocontrollo (14 gg)','self-control (14 days)')}</span></div>
 <div><b>${st.pct}%</b><span>${L('giorni riusciti','days kept')}</span></div>
 <div><b>${st.urges.length?Math.round(st.rode/st.urges.length*100)+'%':'–'}</b><span>${L('impulsi superati','urges ridden out')}</span></div>
 <div><b>${st.drop!=null?'−'+fmtN(st.drop,1):'–'}</b><span>${L('calo medio intensità','avg intensity drop')}</span></div>
@@ -430,7 +552,7 @@ function vProgress(h){
 <div class="cols">
 <div class="panel"><h2>${L('Ultime 12 settimane','Last 12 weeks')}</h2>
 <div class="calw"><div class="dn">${dn.map(x=>`<span>${x}</span>`).join('')}</div><div class="cal">${cells}</div></div>
-<div class="legend"><span><i style="background:var(--acc)"></i>${brk?L('Tenuto','Held'):L('Fatto','Done')}</span><span><i style="background:var(--old)"></i>${brk?L('Passo falso','Slip'):L('Saltato','Missed')}</span><span><i style="background:var(--line)"></i>${L('Non registrato','Not logged')}</span></div>
+<div class="legend"><span><i style="background:var(--acc)"></i>${brk?L('Tenuto','Held'):L('Fatto','Done')}</span><span><i class="lg l"></i>${brk?L('Passo falso','Slip'):L('Saltato','Missed')}</span><span><i style="background:var(--line)"></i>${L('Non registrato','Not logged')}</span></div>
 <p class="note" style="margin-top:10px">${L('Un singolo giorno mancato non ha avuto effetti misurabili sulla formazione dell\'abitudine (Lally 2010). Conta non saltarne due di fila.','A single missed day had no measurable effect on habit formation (Lally 2010). What matters is not missing two in a row.')}</p></div>
 <div class="panel"><h2>${peak?L('Picco degli impulsi: ','Urges peak: ')+esc(peak):L('Quando arrivano gli impulsi','When urges arrive')}</h2>
 <div class="heat">${heat}</div>
@@ -460,43 +582,39 @@ function drawSrb(){
 }
 
 /* ---------- PLAN ---------- */
+const OPEN=new Set(['plans']);
+document.addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.acc){if(d.open)OPEN.add(d.dataset.acc);else OPEN.delete(d.dataset.acc)}},true);
 function vPlan(h){
   const brk=h.kind==='break',w=h.woop||{};
   const sugg=brk?[L('Rendi il gesto più scomodo: più passaggi, più distanza','Make it harder: more steps, more distance'),L('Togli l\'oggetto dalla vista','Put the object out of sight'),L('Cambia il luogo o l\'ordine della routine in cui succede','Change the place or the routine order where it happens'),L('Disattiva le notifiche che fanno da innesco','Turn off the notifications that cue it')]:[L('Prepara l\'occorrente la sera prima','Lay everything out the night before'),L('Agganciala a un gesto che fai già ogni giorno','Attach it to something you already do daily'),L('Stesso posto, stessa ora','Same place, same time'),L('Riduci il primo passo a 2 minuti','Shrink the first step to 2 minutes')];
   const fr=h.friction.map(x=>x.t);
-  return `<section class="view"><div class="cols"><div class="stackc">
-<div class="panel"><h2>${L('L\'abitudine','The habit')}</h2>
-<label class="l" for="pName">${L('Nome','Name')}</label><input id="pName" data-f="name" value="${esc(h.name)}" maxlength="60">
+  const acc=(id,title,count,body)=>`<details class="panel acc" data-acc="${id}" ${OPEN.has(id)?'open':''}><summary><h2>${title}</h2>${count!=null?`<span class="sumc">${count}</span>`:''}</summary>${body}</details>`;
+  const wf=['wish','outcome','obstacle','plan'].filter(k=>w[k]).length;
+  return `<section class="view"><p class="note" style="margin:0">${L('Tocca una sezione per aprirla. Le modifiche si salvano da sole.','Tap a section to open it. Changes save automatically.')}</p><div class="cols"><div class="stackc">
+${acc('plans',L('Piani se-allora','If-then plans'),h.plans.length,`<p class="cite">${L('Le «implementation intentions» hanno un effetto medio-grande sul raggiungimento degli obiettivi (d = 0,65; 94 test, Gollwitzer & Sheeran 2006). Scrivi la situazione precisa e la risposta precisa.','Implementation intentions have a medium-to-large effect on goal attainment (d = 0.65; 94 tests, Gollwitzer & Sheeran 2006). Write the exact situation and the exact response.')}</p>
+<ul class="lst">${h.plans.map((p,i)=>`<li><span class="ifthen"><b>${L('Se','If')}</b> ${esc(p.if)}, <b>${L('allora','then')}</b> ${esc(p.then)}.</span><button class="x" data-act="delPlan" data-i="${i}" aria-label="${L('Elimina','Delete')}">✕</button></li>`).join('')}</ul>
+<form id="planF"><label class="l" for="pIf">${L('Se…','If…')}</label><input id="pIf" required maxlength="120" placeholder="${brk?L('sono sul divano dopo cena e prendo il telefono','I\'m on the sofa after dinner and reach for my phone'):L('finisco di lavarmi i denti la mattina','I finish brushing my teeth in the morning')}">
+<label class="l" for="pThen">${L('…allora','…then')}</label><input id="pThen" required maxlength="120" placeholder="${brk?L('lo lascio in un\'altra stanza e bevo un bicchiere d\'acqua','I leave it in another room and drink a glass of water'):L('faccio 10 piegamenti accanto al lavandino','I do 10 push-ups by the sink')}">
+<button class="go" style="margin-top:10px">${L('Aggiungi piano','Add plan')}</button></form>`)}
+${acc('resp',brk?L('Risposta alternativa','Competing response'):L('Primo passo minimo','Smallest first step'),h.response?'✓':L('da scrivere','to write'),`<p class="cite">${brk?L('Dall\'Habit Reversal Training: un gesto incompatibile con l\'abitudine, da fare appena senti l\'impulso. Effetto ampio nella meta-analisi di Bate et al. (2011, d = 0,80).','From Habit Reversal Training: an action incompatible with the habit, done as soon as the urge appears. Large effect in Bate et al.\'s 2011 meta-analysis (d = 0.80).'):L('Un primo passo così piccolo da non poter fallire abbassa la soglia d\'ingresso.','A first step too small to fail lowers the barrier to starting.')}</p>
+<input id="pResp" data-f="response" value="${esc(h.response)}" maxlength="100" aria-label="${brk?L('Risposta alternativa','Competing response'):L('Primo passo','First step')}">`)}
+${acc('cues',brk?L('Rompi gli inneschi','Break the cues'):L('Prepara l\'ambiente','Shape the setting'),h.friction.length?h.friction.filter(x=>x.done).length+'/'+h.friction.length:null,`<p class="cite">${L('Le abitudini sono attivate dal contesto: cambiare gli inneschi nell\'ambiente funziona meglio che contare sulla forza di volontà (Verplanken & Wood 2006; Wood et al. 2005).','Habits are triggered by context: changing the cues around you beats relying on willpower (Verplanken & Wood 2006; Wood et al. 2005).')}</p>
+<ul class="lst">${h.friction.map((x,i)=>`<li><label class="chk"><input type="checkbox" data-act="frTog" data-i="${i}" ${x.done?'checked':''}><span class="${x.done?'done':''}">${esc(x.t)}</span></label><button class="x" data-act="delFr" data-i="${i}" aria-label="${L('Elimina','Delete')}">✕</button></li>`).join('')}</ul>
+<div class="chipset" style="margin:8px 0">${sugg.filter(s=>!fr.includes(s)).map(s=>`<button data-act="addFr" data-v="${esc(s)}">+ ${esc(s)}</button>`).join('')}</div>
+<div class="row"><input id="newFr" maxlength="80" placeholder="${L('Altra modifica…','Another change…')}" aria-label="${L('Altra modifica','Another change')}"><button data-act="addFrIn">${L('Aggiungi','Add')}</button></div>`)}
+${acc('reasons',L('I tuoi motivi','Your reasons'),h.reasons.length,`<p class="cite">${L('Te li mostro durante gli impulsi.','Shown to you during urges.')}</p>
+<ul class="lst">${h.reasons.map((r,i)=>`<li><span>${esc(r)}</span><button class="x" data-act="delReason" data-i="${i}" aria-label="${L('Elimina','Delete')}">✕</button></li>`).join('')}</ul>
+<div class="row"><input id="newReason" maxlength="80" placeholder="${L('Un motivo concreto…','A concrete reason…')}" aria-label="${L('Nuovo motivo','New reason')}"><button data-act="addReason">${L('Aggiungi','Add')}</button></div>`)}
+</div><div class="stackc">
+${acc('woop','WOOP',wf+'/4',`<p class="cite">${L('Contrasto mentale con piani se-allora (MCII): effetto piccolo-medio ma robusto (g = 0,34; 21 studi, Wang et al. 2021).','Mental contrasting with implementation intentions (MCII): small-to-medium but robust effect (g = 0.34; 21 studies, Wang et al. 2021).')}</p>
+${[['wish',L('Desiderio','Wish'),L('Cosa vuoi davvero?','What do you really want?')],['outcome',L('Risultato','Outcome'),L('Immagina il risultato migliore: com\'è?','Picture the best outcome: what is it like?')],['obstacle',L('Ostacolo','Obstacle'),L('Qual è l\'ostacolo dentro di te?','What is the obstacle inside you?')],['plan',L('Piano','Plan'),L('Se succede l\'ostacolo, allora…','If the obstacle happens, then…')]].map(([k,t,ph])=>`<label class="l" for="w_${k}">${t}</label><textarea id="w_${k}" data-w="${k}" maxlength="240" placeholder="${ph}" style="min-height:60px">${esc(w[k]||'')}</textarea>`).join('')}`)}
+${acc('habit',L('Dettagli dell\'abitudine','Habit details'),null,`<label class="l" for="pName">${L('Nome','Name')}</label><input id="pName" data-f="name" value="${esc(h.name)}" maxlength="60">
 <p class="lbl">${L('Obiettivo','Goal')}</p><div class="pair"><button data-act="kind" data-v="break" aria-pressed="${brk}">${L('Interromperla','Break it')}</button><button data-act="kind" data-v="build" aria-pressed="${!brk}">${L('Costruirla','Build it')}</button></div>
 <label class="l" for="pStart">${L('Data di inizio','Start date')}</label><input id="pStart" type="date" data-f="start" value="${esc(h.start)}" max="${today()}">
 <label class="l" for="pCue">${L('Innesco abituale (quando, dove, dopo cosa)','Usual cue (when, where, after what)')}</label><input id="pCue" data-f="cue" value="${esc(h.cue)}" maxlength="100">
 ${brk?`<div class="pair"><div><label class="l" for="pCost">${L('Costo al giorno','Cost per day')}</label><div class="row"><input id="pCost" type="number" inputmode="decimal" min="0" step="0.5" data-f="cost" value="${h.cost||''}" style="flex:1 1 4em"><input id="pCur" data-f="cur" value="${esc(h.cur)}" maxlength="4" style="flex:0 0 4.2em" aria-label="${L('Valuta','Currency')}"></div></div><div><label class="l" for="pMins">${L('Minuti al giorno','Minutes per day')}</label><input id="pMins" type="number" inputmode="numeric" min="0" data-f="mins" value="${h.mins||''}"></div></div>`:''}
-</div>
-<div class="panel"><h2>${L('Piani se-allora','If-then plans')}</h2>
-<p class="cite">${L('Le «implementation intentions» hanno un effetto medio-grande sul raggiungimento degli obiettivi (d = 0,65; 94 test, Gollwitzer & Sheeran 2006). Scrivi la situazione precisa e la risposta precisa.','Implementation intentions have a medium-to-large effect on goal attainment (d = 0.65; 94 tests, Gollwitzer & Sheeran 2006). Write the exact situation and the exact response.')}</p>
-<ul class="lst">${h.plans.map((p,i)=>`<li><span class="ifthen"><b>${L('Se','If')}</b> ${esc(p.if)}, <b>${L('allora','then')}</b> ${esc(p.then)}.</span><button class="x" data-act="delPlan" data-i="${i}" aria-label="${L('Elimina','Delete')}">✕</button></li>`).join('')}</ul>
-<form id="planF"><label class="l" for="pIf">${L('Se…','If…')}</label><input id="pIf" required maxlength="120" placeholder="${brk?L('sono sul divano dopo cena e prendo il telefono','I\'m on the sofa after dinner and reach for my phone'):L('finisco di lavarmi i denti la mattina','I finish brushing my teeth in the morning')}">
-<label class="l" for="pThen">${L('…allora','…then')}</label><input id="pThen" required maxlength="120" placeholder="${brk?L('lo lascio in un\'altra stanza e bevo un bicchiere d\'acqua','I leave it in another room and drink a glass of water'):L('faccio 10 piegamenti accanto al lavandino','I do 10 push-ups by the sink')}">
-<button class="go" style="margin-top:10px">${L('Aggiungi piano','Add plan')}</button></form></div>
-<div class="panel"><h2>${brk?L('Risposta alternativa','Competing response'):L('Primo passo minimo','Smallest first step')}</h2>
-<p class="cite">${brk?L('Dall\'Habit Reversal Training: un gesto incompatibile con l\'abitudine, da fare appena senti l\'impulso. Effetto ampio nella meta-analisi di Bate et al. (2011, d = 0,80).','From Habit Reversal Training: an action incompatible with the habit, done as soon as the urge appears. Large effect in Bate et al.\'s 2011 meta-analysis (d = 0.80).'):L('Un primo passo così piccolo da non poter fallire abbassa la soglia d\'ingresso.','A first step too small to fail lowers the barrier to starting.')}</p>
-<input id="pResp" data-f="response" value="${esc(h.response)}" maxlength="100" aria-label="${brk?L('Risposta alternativa','Competing response'):L('Primo passo','First step')}"></div>
-</div><div class="stackc">
-<div class="panel"><h2>WOOP</h2>
-<p class="cite">${L('Contrasto mentale con piani se-allora (MCII): effetto piccolo-medio ma robusto (g = 0,34; 21 studi, Wang et al. 2021).','Mental contrasting with implementation intentions (MCII): small-to-medium but robust effect (g = 0.34; 21 studies, Wang et al. 2021).')}</p>
-${[['wish',L('Desiderio','Wish'),L('Cosa vuoi davvero?','What do you really want?')],['outcome',L('Risultato','Outcome'),L('Immagina il risultato migliore: com\'è?','Picture the best outcome: what is it like?')],['obstacle',L('Ostacolo','Obstacle'),L('Qual è l\'ostacolo dentro di te?','What is the obstacle inside you?')],['plan',L('Piano','Plan'),L('Se succede l\'ostacolo, allora…','If the obstacle happens, then…')]].map(([k,t,ph])=>`<label class="l" for="w_${k}">${t}</label><textarea id="w_${k}" data-w="${k}" maxlength="240" placeholder="${ph}" style="min-height:60px">${esc(w[k]||'')}</textarea>`).join('')}</div>
-<div class="panel"><h2>${brk?L('Rompi gli inneschi','Break the cues'):L('Prepara l\'ambiente','Shape the setting')}</h2>
-<p class="cite">${L('Le abitudini sono attivate dal contesto: cambiare gli inneschi nell\'ambiente funziona meglio che contare sulla forza di volontà (Verplanken & Wood 2006; Wood et al. 2005).','Habits are triggered by context: changing the cues around you beats relying on willpower (Verplanken & Wood 2006; Wood et al. 2005).')}</p>
-<ul class="lst">${h.friction.map((x,i)=>`<li><label class="chk"><input type="checkbox" data-act="frTog" data-i="${i}" ${x.done?'checked':''}><span class="${x.done?'done':''}">${esc(x.t)}</span></label><button class="x" data-act="delFr" data-i="${i}" aria-label="${L('Elimina','Delete')}">✕</button></li>`).join('')}</ul>
-<div class="chipset" style="margin:8px 0">${sugg.filter(s=>!fr.includes(s)).map(s=>`<button data-act="addFr" data-v="${esc(s)}">+ ${esc(s)}</button>`).join('')}</div>
-<div class="row"><input id="newFr" maxlength="80" placeholder="${L('Altra modifica…','Another change…')}"><button data-act="addFrIn">${L('Aggiungi','Add')}</button></div></div>
-<div class="panel"><h2>${L('I tuoi motivi','Your reasons')}</h2>
-<p class="cite">${L('Te li mostro durante gli impulsi.','Shown to you during urges.')}</p>
-<ul class="lst">${h.reasons.map((r,i)=>`<li><span>${esc(r)}</span><button class="x" data-act="delReason" data-i="${i}" aria-label="${L('Elimina','Delete')}">✕</button></li>`).join('')}</ul>
-<div class="row"><input id="newReason" maxlength="80" placeholder="${L('Un motivo concreto…','A concrete reason…')}"><button data-act="addReason">${L('Aggiungi','Add')}</button></div></div>
-<div class="panel"><h2>${L('Promemoria quotidiano','Daily reminder')}</h2>
-${framed?`<p class="note">${L('Disponibile nell\'app installata: crea un evento ricorrente nel calendario del telefono, funziona anche offline.','Available in the installed app: it adds a repeating event to your phone\'s calendar and works offline.')}</p>`:`<p class="note">${L('Crea un evento ricorrente nel calendario del telefono per il check-in serale.','Adds a repeating calendar event on your phone for the evening check-in.')}</p><div class="row"><input id="remT" type="time" value="${esc(S.remT||'21:30')}" style="flex:0 0 8em" aria-label="${L('Ora','Time')}"><button data-act="ics">${L('Aggiungi al calendario','Add to calendar')}</button></div>`}</div>
-<button data-act="delHab" class="wide">${L('Elimina questa abitudine','Delete this habit')}</button>
+<button data-act="delHab" class="wide" style="margin-top:16px">${L('Elimina questa abitudine','Delete this habit')}</button>`)}
+${acc('remind',L('Promemoria quotidiano','Daily reminder'),null,framed?`<p class="note">${L('Disponibile nell\'app installata: crea un evento ricorrente nel calendario del telefono, funziona anche offline.','Available in the installed app: it adds a repeating event to your phone\'s calendar and works offline.')}</p>`:`<p class="note">${L('Crea un evento ricorrente nel calendario del telefono per il check-in serale.','Adds a repeating calendar event on your phone for the evening check-in.')}</p><div class="row"><input id="remT" type="time" value="${esc(S.remT||'21:30')}" style="flex:0 0 8em" aria-label="${L('Ora','Time')}"><button data-act="ics">${L('Aggiungi al calendario','Add to calendar')}</button></div>`)}
 </div></div></section>`;
 }
 
@@ -531,10 +649,17 @@ ${std?`<p>${L('Decondition funziona offline. I dati restano solo su questo telef
 }
 
 /* ---------- SHEETS ---------- */
-function openSheet(html){$('sheetIn').innerHTML=html;$('sheet').hidden=false;const f=$('sheetIn').querySelector('input,textarea,button:not(.x)');if(f)setTimeout(()=>f.focus({preventScroll:true}),50)}
-function closeSheet(){$('sheet').hidden=true;$('sheetIn').innerHTML=''}
+let lastFocus=null;
+function openSheet(html){lastFocus=document.activeElement;$('sheetIn').innerHTML=html;$('sheet').hidden=false;document.body.style.overflow='hidden';const f=$('sheetIn').querySelector('input,textarea,button:not(.x)');if(f)setTimeout(()=>f.focus({preventScroll:true}),60)}
+function closeSheet(){$('sheet').hidden=true;$('sheetIn').innerHTML='';document.body.style.overflow='';if(lastFocus&&lastFocus.isConnected)try{lastFocus.focus({preventScroll:true})}catch(e){}}
+$('sheet').addEventListener('keydown',e=>{if(e.key!=='Tab')return;const f=[...$('sheetIn').querySelectorAll('button,input,textarea,select,a[href]')].filter(x=>!x.disabled&&x.offsetParent);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
+function sheetScore(){const h=cur(),sc=score(h);
+  openSheet(sheetHead(L('Punteggio di autocontrollo','Self-control score'))+`<p style="font:700 44px Sora,Inter,sans-serif;color:var(--sup);margin:4px 0">${sc.v}<span class="note" style="font:500 16px Inter"> / 100</span></p>
+<p>${L('Calcolato sulle tue scelte degli ultimi 14 giorni:','Calculated from your choices over the last 14 days:')} <b>${sc.w}</b> ${L('vittorie (giorni tenuti e impulsi superati) e','wins (days held and urges ridden out) and')} <b>${sc.l}</b> ${L('cedimenti (passi falsi e impulsi a cui hai ceduto). 50 significa parità.','give-ins (slips and urges you gave in to). 50 means even.')}</p>
+<p class="note">${L('Non misura la dopamina: nessuna app può farlo. Misura il comportamento, che è ciò che si allena davvero. Formula: (vittorie + 1) / (vittorie + cedimenti + 2), così pochi dati non danno valori estremi.','It does not measure dopamine: no app can. It measures behaviour, which is what you actually train. Formula: (wins + 1) / (wins + give-ins + 2), so little data never gives extreme values.')}</p>
+<button class="go wide" data-act="close" style="margin-top:8px">${L('Ho capito','Got it')}</button>`)}
 $('sheet').addEventListener('click',e=>{if(e.target===$('sheet'))closeSheet()});
-addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').hidden)closeSheet()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').hidden)closeSheet();if(e.key==='Enter'&&S.onboard&&e.target.tagName==='INPUT'){e.preventDefault();const b=document.querySelector(OB.step===4?'[data-act=obDone]':'[data-act=ob][data-v=next]');if(b)b.click()}});
 const sheetHead=t=>`<div class="sheetH"><h2>${t}</h2><button class="x" data-act="close" aria-label="${L('Chiudi','Close')}">✕</button></div>`;
 let NK='break';
 function sheetNew(){
@@ -580,22 +705,30 @@ document.addEventListener('click',e=>{
   switch(a){
     case 'hab':S.cur=b.dataset.id;save();render();break;
     case 'newhab':sheetNew();break;
+    case 'ckUndo':{const t=today();change(()=>{delete h.log[t]},L('Check-in annullato','Check-in cleared'));break}
+    case 'scoreInfo':sheetScore();break;
+    case 'ob':{if(v==='back'){OB.step=Math.max(0,OB.step-1)}else{if(OB.step===2&&!OB.name.trim()){toast(L('Scrivi o scegli un\'abitudine','Type or pick a habit'));$('obName').focus();break}OB.step=Math.min(4,OB.step+(v==='skip'?1:1));if(v==='skip'){OB.iff='';OB.then=''}}buzz();render();scrollTo(0,0);break}
+    case 'obKind':OB.kind=v;OB.picked=true;OB.step=2;buzz();render();break;
+    case 'obEx':OB.name=v;$('obName').value=v;OB.step=3;buzz();render();break;
+    case 'obDone':obFinish();break;
+    case 'obSample':S=sample(S.lang);save();render();break;
+    case 'mi':{const m=MICRO(h).find(x=>x.id===v);if(!m)break;U.mi=v;U.prevMin=U.min;U.min=m.min;U.ph='run';U.start=Date.now();U.end=U.start+U.min*6e4;U.post=Math.max(0,U.pre-3);saveU();buzz();render();startTick();break}
     case 'nk':NK=v;for(const x of $('sheetIn').querySelectorAll('[data-act=nk]'))x.setAttribute('aria-pressed',x.dataset.v===v);break;
     case 'close':closeSheet();break;
-    case 'ck':{const t=today();if(h.log[t]===v){change(()=>{delete h.log[t]},L('Check-in rimosso','Check-in removed'))}else if(v==='k'){change(()=>{h.log[t]='k'},h.kind==='break'?L('Un altro strato sul nuovo percorso.','Another layer on the new route.'):L('Fatto. Ripetizione registrata.','Done. Repetition logged.'))}else if(h.kind==='break'){sheetLapse(false)}else{change(()=>{h.log[t]='l'},L('Registrato. Domani conta più di oggi.','Logged. Tomorrow matters more than today.'))}break}
+    case 'ck':{const t=today();buzz(20);if(h.log[t]===v){change(()=>{delete h.log[t]},L('Check-in rimosso','Check-in removed'))}else if(v==='k'){change(()=>{h.log[t]='k'},h.kind==='break'?L('Un altro strato sul nuovo percorso.','Another layer on the new route.'):L('Fatto. Ripetizione registrata.','Done. Repetition logged.'));requestAnimationFrame(()=>{const e=document.querySelector('.doneS');if(e)e.classList.add('pop')})}else if(h.kind==='break'){sheetLapse(false)}else{change(()=>{h.log[t]='l'},L('Registrato. Domani conta più di oggi.','Logged. Tomorrow matters more than today.'))}break}
     case 'srbai':sheetSrb();break;
     case 'lk':for(const x of b.parentNode.children)x.setAttribute('aria-pressed',x===b);break;
     case 'uTrig':U.trig=U.trig===v?'':v;saveU();render();break;
     case 'uHalt':U.halt=U.halt.includes(v)?U.halt.filter(x=>x!==v):[...U.halt,v];saveU();render();break;
     case 'uMin':U.min=+v;saveU();render();break;
     case 'addTrig':{const inp=$('newTrig'),t=inp.value.trim();if(t&&!S.trigs.includes(t)){S.trigs.push(t);U.trig=t;save();saveU();render()}break}
-    case 'uStart':U.ph='run';U.start=Date.now();U.end=U.start+U.min*6e4;U.post=Math.max(0,U.pre-3);saveU();render();startTick();break;
+    case 'uStart':U.mi=null;U.ph='run';U.start=Date.now();U.end=U.start+U.min*6e4;U.post=Math.max(0,U.pre-3);saveU();render();startTick();break;
     case 'uEnd':clearInterval(uTick);U.ph='post';saveU();render();break;
     case 'uGave':clearInterval(uTick);U.ph='post';U.post=U.pre;saveU();render();break;
     case 'uAgain':U.ph='run';U.start=Date.now();U.end=U.start+U.min*6e4;saveU();render();startTick();break;
-    case 'uSave':{const out=v,rec={t:Date.now(),hid:h.id,pre:U.pre,post:U.post,trig:U.trig,halt:U.halt.slice(),out};
+    case 'uSave':{const out=v,rec={t:Date.now(),hid:h.id,pre:U.pre,post:U.post,trig:U.trig,halt:U.halt.slice(),out,mi:U.mi||null};buzz(out==='rode'?[20,60,20]:15);
       change(()=>{S.urges.push(rec)},out==='rode'?L('Onda superata. Registrata.','Wave ridden out. Logged.'):(h.kind==='break'?null:L('Registrato.','Logged.')),true);
-      const trig=U.trig;U={ph:'set',pre:6,trig:'',halt:[],min:U.min,end:0,start:0,post:3};saveU();
+      const trig=U.trig;U={ph:'set',pre:6,trig:'',halt:[],min:U.mi?(U.prevMin||10):U.min,end:0,start:0,post:3,mi:null};saveU();
       if(out==='gave'&&h.kind==='break'){U.trig=trig;sheetLapse(true);U.trig=''}
       render();break}
     case 'lsit':LS.sit=LS.sit===v?'':v;for(const x of $('lsit').children)x.setAttribute('aria-pressed',x.dataset.v===LS.sit);break;
@@ -613,11 +746,11 @@ document.addEventListener('click',e=>{
       else{b.dataset.armed='1';b.textContent=L('Tocca di nuovo per confermare','Tap again to confirm');setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent=L('Elimina questa abitudine','Delete this habit')}},3500)}
       break;
     case 'ics':ics();break;
-    case 'lang':S.lang=v;save();render();break;
+    case 'lang':S.lang=v;save();$('toast').classList.remove('on');render();break;
     case 'copyData':{const txt=JSON.stringify(S);Promise.resolve().then(()=>navigator.clipboard.writeText(txt)).then(()=>toast(L('Dati copiati','Data copied')),()=>{const ta=$('impT');ta.value=txt;ta.select();toast(L('Selezionati: copia manualmente','Selected: copy them manually'))});break}
     case 'dlData':dl('decondition-backup-'+today()+'.json','application/json',JSON.stringify(S,null,1));break;
     case 'fresh':
-      if(b.dataset.armed||S.sample){const lang=S.lang;change(()=>{S={v:2,lang,cur:null,sample:false,habits:[],urges:[],lapses:[],trigs:[]}},L('Dati cancellati','Data cleared'));location.hash='today';sheetNew()}
+      if(b.dataset.armed||S.sample){const lang=S.lang,wasSample=S.sample;OB={step:wasSample?1:0,kind:'break',name:'',iff:'',then:'',why:'',mins:''};change(()=>{S=blank(lang)},wasSample?null:L('Dati cancellati','Data cleared'));if(location.hash!=='#today')location.hash='today';scrollTo(0,0)}
       else{b.dataset.armed='1';b.textContent=L('Tocca di nuovo per confermare','Tap again to confirm')}
       break;
   }
@@ -626,6 +759,7 @@ document.addEventListener('input',e=>{
   const t=e.target;
   if(t.id==='uPre'){U.pre=+t.value;$('uPreO').textContent=t.value;saveU()}
   if(t.id==='uPost'){U.post=+t.value;$('uPostO').textContent=t.value;saveU()}
+  if(t.id==='obName')OB.name=t.value;if(t.id==='obIf')OB.iff=t.value;if(t.id==='obThen')OB.then=t.value;if(t.id==='obWhy')OB.why=t.value;if(t.id==='obMins')OB.mins=t.value;
 });
 document.addEventListener('change',e=>{
   const t=e.target,h=H();if(!h)return;
@@ -669,6 +803,7 @@ if(!framed&&'serviceWorker' in navigator&&(location.protocol==='https:'||locatio
 (async()=>{
   try{
     const c=window.claude;if(!c||!c.use)return;
+    const sy=$('sync');sy.textContent=L('Sincronizzo…','Syncing…');sy.hidden=false;setTimeout(()=>{sy.hidden=true},11000);
     const to=new Promise(r=>setTimeout(()=>r(null),10000));
     const [db,user]=await Promise.race([Promise.all([c.use('db'),c.use('user')]),to.then(()=>[null,null])]);
     if(!db||!user)return;
@@ -678,8 +813,9 @@ if(!framed&&'serviceWorker' in navigator&&(location.protocol==='https:'||locatio
     const v=snap&&(typeof snap.data==='function'?snap.data():snap);
     ref=r;
     if(v&&typeof v.s==='string'){const o=migrate(JSON.parse(v.s));if(o){S=o;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}render()}}
-    else if(!S.sample)save();
-  }catch(e){}
+    else if(!S.sample&&!S.onboard)save();
+    $('sync').hidden=true;
+  }catch(e){$('sync').hidden=true}
 })();
 }
 </script>
